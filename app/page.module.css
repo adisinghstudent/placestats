@@ -50,3 +50,14 @@
   box-shadow: 0 0 0 2px rgba(0,0,0,0.1);
 }
 
+.countryContainer {
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid #333;
+}
+
+.countryContainer h3 {
+  margin-bottom: 8px;
+  font-size: 16px;
+  font-weight: 600;
+}

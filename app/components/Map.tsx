@@ -1,10 +1,10 @@
+// app/components/Map.tsx
 'use client'
 import { useEffect, useRef, useState } from 'react'
 import mapboxgl from 'mapbox-gl'
 import 'mapbox-gl/dist/mapbox-gl.css'
 
-// Replace with your Mapbox access token
-mapboxgl.accessToken = 'pk.eyJ1IjoiYWRpczEyMyIsImEiOiJjbTJxZjFtcTYwbXZyMmtyMWxlcWRqYnFhIn0.-SswCiDuWIyLZzoFFw-omQ'
+mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_TOKEN as string;
 
 interface MapProps {
   onLocationSelect: (coordinates: { lng: number; lat: number }) => void;
@@ -22,7 +22,7 @@ function Map({ onLocationSelect }: MapProps) {
     map.current = new mapboxgl.Map({
       container: mapContainer.current,
       style: 'mapbox://styles/adis123/cm2trla51000q01qw78sv431j',
-      center: [10.7522, 59.9139], // Default center
+      center: [10.7522, 59.9139],
       zoom: 10
     });
 
@@ -34,12 +34,12 @@ function Map({ onLocationSelect }: MapProps) {
         lat: e.lngLat.lat
       };
 
-      // Remove existing marker
+      // Remove existing marker if it exists
       if (marker) {
         marker.remove();
       }
 
-      // Add new marker
+      // Create and add new marker
       const newMarker = new mapboxgl.Marker()
         .setLngLat([coordinates.lng, coordinates.lat])
         .addTo(map.current!);
@@ -47,7 +47,6 @@ function Map({ onLocationSelect }: MapProps) {
       setMarker(newMarker);
       onLocationSelect(coordinates);
 
-      // Save to data.json and show toast
       fetch('/api/saveLocation', {
         method: 'POST',
         headers: {
@@ -63,11 +62,16 @@ function Map({ onLocationSelect }: MapProps) {
       });
     });
 
+    // Cleanup function
     return () => {
-      if (marker) marker.remove();
-      if (map.current) map.current.remove();
+      if (marker) {
+        marker.remove();
+      }
+      if (map.current) {
+        map.current.remove();
+      }
     };
-  }, []);
+  }, [marker, onLocationSelect]); // Add dependencies here
 
   return (
     <div className="relative">
@@ -82,4 +86,3 @@ function Map({ onLocationSelect }: MapProps) {
 }
 
 export default Map;
-
