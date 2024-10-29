@@ -1,4 +1,9 @@
 // app/components/Map.tsx
+
+
+// fix the marker not showing up on the map
+// fix the map.current reset issue, where user is redirected to map.current location after selecting a location
+
 'use client'
 import { useEffect, useRef, useState } from 'react'
 import mapboxgl from 'mapbox-gl'
@@ -23,7 +28,7 @@ function Map({ onLocationSelect }: MapProps) {
       container: mapContainer.current,
       style: 'mapbox://styles/adis123/cm2trla51000q01qw78sv431j',
       center: [10.7522, 59.9139],
-      zoom: 10
+      zoom: 3,
     });
 
     map.current.addControl(new mapboxgl.NavigationControl(), 'top-right');
