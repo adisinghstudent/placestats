@@ -61,3 +61,9 @@
   font-size: 16px;
   font-weight: 600;
 }
+
+/* app/page.module.css */
+.splineContainer {
+  width: 100%;
+  margin-bottom: 20px; /* Add some space between Spline and the map */
+}

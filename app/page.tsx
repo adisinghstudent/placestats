@@ -1,8 +1,8 @@
 // app/page.tsx
-'use client'
-import Map from './components/Map'
-import { useState, useEffect } from 'react'
-import styles from './page.module.css'
+import { useState, useEffect } from 'react';
+import Map from './components/Map';
+import Spline from '@splinetool/react-spline';
+import styles from './page.module.css';
 
 export default function Home() {
   const [coordinates, setCoordinates] = useState<{ lng: number; lat: number }>({ lng: 0, lat: 0 });
@@ -48,9 +48,12 @@ export default function Home() {
     setCoordinates(coords);
     fetchCountry(coords.lng, coords.lat);
   };
-  
+
   return (
     <main className={styles.container}>
+      <div className="splineContainer" style={{ height: '50vh', overflow: 'hidden' }}>
+        <Spline scene="https://prod.spline.design/Yjqw4vZ2JkMXmMSR/scene.splinecode" />
+      </div>
       <div className={styles.mapContainer}>
         <Map onLocationSelect={handleLocationSelect} />
       </div>
@@ -71,5 +74,5 @@ export default function Home() {
         </div>
       </div>
     </main>
-  )
+  );
 }
